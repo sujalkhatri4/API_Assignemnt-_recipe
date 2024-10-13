@@ -4,7 +4,7 @@ const fs = require('fs');
 // function to import recipes from json
 exports.importRecipes = async(req,res)=>{
     try{
-        const data = JSON.parse(fs.readFileSync('./recipes.json','utf-8'));
+        const data = json.parse(fs.readFileSync('./recipes.json','utf-8'));
         await Recipe.insertMany(data);//import data 
         res.status(200).send("recipes imported sucessfully");
     }
@@ -16,23 +16,22 @@ exports.importRecipes = async(req,res)=>{
 exports.getRecipes = async(req,res)=>{
     try{
         const recipes = await Recipe.find();
-        res.status(200).JSON(recipes);
+        res.status(200).json(recipes);
     }
     catch(e){
             console.error(e);
-            res.statis(500).send('error retriving recipe');
+            res.status(500).send('error retriving recipe');
     }
 };
 
 // function to create new recipe
-exports.createRecipe = async(req,res)=>{
-    try{
-        const newRecipe = new Recipe.find(req.body);
+exports.createRecipe = async (req, res) => {
+    try {
+        const newRecipe = new Recipe(req.body); // Assuming req.body contains valid recipe data
         await newRecipe.save();
-        res.status(201).JSON(recipes);
+        res.status(201).json(newRecipe);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error creating recipe');
     }
-    catch(e){
-            console.error(e);
-            res.statis(500).send('error creating recipe');
-    }
-}
+};

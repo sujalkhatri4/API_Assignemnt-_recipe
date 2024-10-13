@@ -28,8 +28,13 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use('/api/recipe',recipeRoutes)
 
 // read data from json 
-const data = JSON.parse(fs.readFileSync('./recipes.json','utf-8'));
-console.log(data);
+try {
+    const data = JSON.parse(fs.readFileSync('./recipes.json', 'utf-8'));
+    console.log(data); // Use the data as needed
+} catch (error) {
+    console.error('Error reading or parsing the file:', error);
+}
+
 
 //Define  a route 
 app.get ('/',(req,res)=>{
