@@ -14,4 +14,10 @@ router.post('/create',recipeController.createRecipe);
 //Route to get a single recipe by id
 router.get('/:id',recipeController.getRecipeById);
 
+//Route to update a recipe by id
+
+router.put('/update/:id', recipeController.updateRecipe);
+
+
+
 module.exports=router;

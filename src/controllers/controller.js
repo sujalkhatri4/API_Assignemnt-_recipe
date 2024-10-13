@@ -52,3 +52,22 @@ exports.getRecipeById = async(req,res) =>{
         res.status(500).send('Error retrieving the recipe');
     }
     };
+
+    //update recipe
+
+//Get a single recipe by Id
+exports.updateRecipe = async(req,res) =>{
+    try{
+        const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id,req.body,{new:true});
+        if(!updatedRecipe){
+            return res.status(404).send('Recipe is not updated');
+        }
+        res.status(201).json(Recipe);
+    
+    }
+    catch(e){
+        console.error(e);
+        res.status(500).send('Error uodating the Recipe');
+    }
+    };
+
