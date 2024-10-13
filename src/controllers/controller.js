@@ -1,30 +1,30 @@
-const Recipe = require('../models/Recipe')
+const Recipe = require('../models/Recipe');
 const fs = require('fs');
 
-// function to import recipes from json
-exports.importRecipes = async(req,res)=>{
-    try{
-        const data = json.parse(fs.readFileSync('./recipes.json','utf-8'));
-        await Recipe.insertMany(data);//import data 
-        res.status(200).send("recipes imported sucessfully");
-    }
-    catch(e){
-            console.error(e);
-    }
-};
-//func to get all the data
-exports.getRecipes = async(req,res)=>{
-    try{
-        const recipes = await Recipe.find();
-        res.status(200).json(recipes);
-    }
-    catch(e){
-            console.error(e);
-            res.status(500).send('error retriving recipe');
+// Function to import recipes from JSON
+exports.importRecipes = async (req, res) => {
+    try {
+        const data = JSON.parse(fs.readFileSync('./recipes.json', 'utf-8')); // Corrected to JSON.parse
+        await Recipe.insertMany(data); // Import data
+        res.status(200).send("Recipes imported successfully");
+    } catch (e) {
+        console.error(e);
+        res.status(500).send('Error importing recipes');
     }
 };
 
-// function to create new recipe
+// Function to get all recipes
+exports.getRecipes = async (req, res) => {
+    try {
+        const recipes = await Recipe.find();
+        res.status(200).json(recipes);
+    } catch (e) {
+        console.error(e);
+        res.status(500).send('Error retrieving recipes');
+    }
+};
+
+// Function to create a new recipe
 exports.createRecipe = async (req, res) => {
     try {
         const newRecipe = new Recipe(req.body); // Assuming req.body contains valid recipe data
@@ -36,53 +36,44 @@ exports.createRecipe = async (req, res) => {
     }
 };
 
-
-//Get a single recipe by Id
-exports.getRecipeById = async(req,res) =>{
-    try{
-        const recipe = await recipe.findById(req.params.id);
-        if(!recipe){
-            return res.status(404).send('recipe is not found');
+// Get a single recipe by ID
+exports.getRecipeById = async (req, res) => {
+    try {
+        const recipe = await Recipe.findById(req.params.id); // Corrected from `recipe` to `Recipe`
+        if (!recipe) {
+            return res.status(404).send('Recipe not found');
         }
-        res.status(201).json(recipe);
-    
-    }
-    catch(e){
+        res.status(200).json(recipe); // Changed status to 200 for successful retrieval
+    } catch (e) {
         console.error(e);
         res.status(500).send('Error retrieving the recipe');
     }
-    };
+};
 
-    //update recipe
-
-//Get a single recipe by Id
-exports.updateRecipe = async(req,res) =>{
-    try{
-        const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id,req.body,{new:true});
-        if(!updatedRecipe){
-            return res.status(404).send('Recipe is not updated');
+// Update a recipe
+exports.updateRecipe = async (req, res) => {
+    try {
+        const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedRecipe) {
+            return res.status(404).send('Recipe not found');
         }
-        res.status(201).json(Recipe);
-    
-    }
-    catch(e){
+        res.status(200).json(updatedRecipe); // Return the updated recipe
+    } catch (e) {
         console.error(e);
-        res.status(500).send('Error uodating the Recipe');
+        res.status(500).send('Error updating the recipe');
     }
-    };
+};
 
-      //Delete a single recipe by Id
-exports.deleteRecipe = async(req,res) =>{
-    try{
-        const deletedRecipe = await Movie.findByIdAndDelete(req.params.id);
-        if(!deletedRecipe){
-            return res.status(404).send('recipe not found');
+// Delete a recipe by ID
+exports.deleteRecipe = async (req, res) => {
+    try {
+        const deletedRecipe = await Recipe.findByIdAndDelete(req.params.id);
+        if (!deletedRecipe) {
+            return res.status(404).send('Recipe not found');
         }
-        res.status(201).json(deletedRecipe);
-    
-    }
-    catch(e){
+        res.status(200).json(deletedRecipe); // Return the deleted recipe
+    } catch (e) {
         console.error(e);
-        res.status(500).send('Error deleting the Recipe');
+        res.status(500).send('Error deleting the recipe');
     }
-    };
+};
