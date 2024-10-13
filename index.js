@@ -6,8 +6,9 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
 dotenv.config({path: './config.env'});
-
+const recipeRoutes = require('./src/routes/routes');
 const InitiateMongoServer = require('./db');
+const { route } = require('./src/routes/routes');
 
 //Initialize Mongo Server
 InitiateMongoServer();
@@ -23,6 +24,8 @@ const app = express();
 // Middleware
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({extended:true})); 
+
+app.use('/api/recipe',recipeRoutes)
 
 // read data from json 
 const data = JSON.parse(fs.readFileSync('./recipes.json','utf-8'));
