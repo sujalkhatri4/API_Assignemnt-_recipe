@@ -35,7 +35,8 @@ console.log(data);
 app.get ('/',(req,res)=>{
     res.send('welcome to  my recipe assignemnt ')
 })
-
+app.use('/recipe',recipeRoutes);
+console.log('hello its working')
 
 //Initiazlie the port
 const PORT = 2004;
