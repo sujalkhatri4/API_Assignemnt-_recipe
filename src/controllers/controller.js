@@ -35,3 +35,20 @@ exports.createRecipe = async (req, res) => {
         res.status(500).send('Error creating recipe');
     }
 };
+
+
+//Get a single recipe by Id
+exports.getRecipeById = async(req,res) =>{
+    try{
+        const recipe = await recipe.findById(req.params.id);
+        if(!recipe){
+            return res.status(404).send('recipe is not found');
+        }
+        res.status(201).json(recipe);
+    
+    }
+    catch(e){
+        console.error(e);
+        res.status(500).send('Error retrieving the recipe');
+    }
+    };

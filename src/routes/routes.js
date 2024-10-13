@@ -11,4 +11,7 @@ router.get('/',recipeController.getRecipes);
 //routes to create new recipe
 router.post('/create',recipeController.createRecipe);
 
+//Route to get a single recipe by id
+router.get('/:id',recipeController.getRecipeById);
+
 module.exports=router;
