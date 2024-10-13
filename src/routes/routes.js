@@ -18,6 +18,8 @@ router.get('/:id',recipeController.getRecipeById);
 
 router.put('/update/:id', recipeController.updateRecipe);
 
+//Route top delete a recipe by id
 
+router.delete('/delete/:id',recipeController.deleteRecipe);
 
 module.exports=router;
