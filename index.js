@@ -36,7 +36,7 @@ app.get ('/',(req,res)=>{
 })
 
 // Link the Routes
-app.use('/recipe',recipeRoutes);
+app.use('/import/recipe',recipeRoutes);
 console.log("h1")
 
 
